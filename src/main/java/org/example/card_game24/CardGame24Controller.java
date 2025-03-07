@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -107,6 +108,22 @@ public class CardGame24Controller {
 
 
     public void hint_solution(ActionEvent actionEvent) {
+
+
+
+
+
+        String AI_Solution  = "  ";
+
+        // alert feature
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Hint");
+        alert.setHeaderText("Here's a Hint : ");          //
+        alert.setContentText(AI_Solution);  // will pass the solution into text
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            System.out.println("Hint successful");
+        }
     }
 
     public void verify_expression(ActionEvent actionEvent) {
@@ -115,6 +132,8 @@ public class CardGame24Controller {
 
 
 
+
+    // refresh method
     public void refresh_all(ActionEvent actionEvent) {
         shuffleDeck();
         expression_textfield.clear();
