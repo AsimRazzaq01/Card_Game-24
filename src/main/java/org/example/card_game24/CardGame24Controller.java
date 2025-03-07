@@ -49,13 +49,13 @@ public class CardGame24Controller {
             CardValues.add(random.nextInt(13) + 1);
         }
         updateCardImage();
-        if ((CardSlot_1.getImage().equals(CardSlot_2.getImage()) ||
-                CardSlot_1.getImage().equals(CardSlot_3.getImage()) ||
-                CardSlot_1.getImage().equals(CardSlot_4.getImage())  ||
-                CardSlot_2.getImage().equals(CardSlot_3.getImage()) ||
-                CardSlot_1.getImage().equals(CardSlot_4.getImage())) ||
-                CardSlot_3.getImage().equals(CardSlot_4.getImage())
-        ) {
+        if (CardSlot_1.getImage().getUrl().equals(CardSlot_2.getImage().getUrl())  ||
+                CardSlot_1.getImage().getUrl().equals(CardSlot_3.getImage().getUrl()) ||
+                CardSlot_1.getImage().getUrl().equals(CardSlot_4.getImage().getUrl())  ||
+                CardSlot_2.getImage().getUrl().equals(CardSlot_3.getImage().getUrl()) ||
+                CardSlot_1.getImage().getUrl().equals(CardSlot_4.getImage().getUrl()) ||
+                CardSlot_3.getImage().getUrl().equals(CardSlot_4.getImage().getUrl())
+        ){
             shuffleDeck();
         }
     }
