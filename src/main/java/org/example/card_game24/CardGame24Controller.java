@@ -1,5 +1,6 @@
 package org.example.card_game24;
 
+import com.sun.jdi.Value;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -8,8 +9,11 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+
+import javax.naming.Context;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 import java.io.*;
 import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
@@ -44,7 +48,13 @@ public class CardGame24Controller {
      */
     private List<Integer> CardValues = new ArrayList<>();
     private final Random random = new Random();
-    private final ScriptEngine engine = new ScriptEngineManager().getEngineByName("nashorn");
+
+
+    /**
+     * Implement the Script Engine
+     */
+    private final ScriptEngine engine = new ScriptEngineManager().getEngineByName("JavaScript");
+
 
     /**
      * Initialization on start - want to start with different fresh new deck every time
@@ -63,8 +73,10 @@ public class CardGame24Controller {
         for (int i = 0; i < 4; i++) {
             CardValues.add(random.nextInt(13) + 1);
         }
+
         // call update image method
         updateCardImage();
+
         // check for collisions
         if (CardSlot_1.getImage().getUrl().equals(CardSlot_2.getImage().getUrl()) ||
                 CardSlot_1.getImage().getUrl().equals(CardSlot_3.getImage().getUrl()) ||
@@ -75,8 +87,8 @@ public class CardGame24Controller {
         ) {
             shuffleDeck();
         }
-        //System.out.println(CardValues + "\n " + card1Value + "\n" + card2Value + "\n" + card3Value + "\n" + card4Value);
     }
+
 
     /**
      * method to match card image/type to actual png file name
@@ -227,8 +239,40 @@ public class CardGame24Controller {
         }
     }
 
+
+
+
+    /**
+     * Method to verify the expression entered in text field is correct or incorrect
+     * @param actionEvent
+     */
     public void verify_expression(ActionEvent actionEvent) {
+        String expression = expression_textfield.getText();
+
+        if (expression.isEmpty()) {
+            System.out.println("Expression field is empty.");
+            return;
+        }
+        try {
+            Object result = engine.eval(expression);
+
+            if (result instanceof Number) {
+                double numericResult = ((Number) result).doubleValue();
+                if (Math.abs(numericResult - 24) <= 0.0001) { // add Tolerance for floating-point errors
+                    System.out.println("Correct Answer");
+                } else {
+                    System.out.println("Incorrect Answer");
+                }
+            } else {
+                System.out.println("Invalid Expression Result");
+            }
+        } catch (ScriptException e) {
+            System.out.println("Error evaluating expression: " + e.getMessage());
+        }
+
     }
+
+
 
 
     /**
@@ -242,7 +286,7 @@ public class CardGame24Controller {
     }
 
 
-}   // End Controller
+}   // End Card Game 24 Controller
 
 
 
