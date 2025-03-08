@@ -20,4 +20,5 @@ public class CardGame24Application extends Application {
     public static void main(String[] args) {
         launch();
     }
+
 }
